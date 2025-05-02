@@ -6,18 +6,12 @@
 
 This project automates the process of translating text files using **Azure AI Translator**. It is built using **Terraform** for Infrastructure as Code (IaC), an **Azure Function App** to process translations, and **Azure Blob Storage** to manage input/output files. The solution ensures that users can upload a text file in one language and receive a translated version securely and efficiently in another.
 
-Key goals:
-- Provision Azure resources automatically using Terraform
-- Enable users to upload files to Blob Storage
-- Use Azure Functions to trigger translation
-- Store translated results and logs in a separate container
-- Ensure secure access via IAM roles (no hardcoded credentials)
 
 ---
 
 ## 🧩 Project Architecture
 
-![Architecture Diagram](./assets/architecture.png)
+![Architecture Diagram](./assets/Architecture.jpg)
 
 ### 🔁 Workflow Explanation
 
@@ -49,5 +43,5 @@ Key goals:
 
 ---
 
-## 📂 Repository Structure (suggested)
+
 
