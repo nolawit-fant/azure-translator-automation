@@ -1,5 +1,3 @@
-# azure-translator-automation
-
 # Azure Translator Automation
 
 ## 📌 Project Objective
