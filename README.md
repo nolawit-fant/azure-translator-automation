@@ -13,33 +13,51 @@ This project automates the process of translating text files using **Azure AI Tr
 
 ![Architecture Diagram](./assets/Architecture.jpg)
 
-### 🔁 Workflow Explanation
 
-1. **User Uploads File**:  
-   A user uploads a `.txt` file to the **requests** container in Azure Blob Storage.
+### 🧩 Components
 
-2. **Trigger Azure Function**:  
-   The upload triggers the **Azure Function App** which is running Python and Azure SDK code.
+- **Azure Blob Storage**
+  - `requests` container: accepts user-uploaded files to be translated.
+  - `responses` container: stores the translated output and log files.
 
-3. **Translate Text**:  
-   The Azure Function reads the file, sends the content to the **Azure AI Translator API**, and receives the translated result.
+- **Azure Function App**
+  - Triggered automatically when a file is added to the `requests` container.
+  - Written in Python using Azure SDK and Azure AI Translator API.
+  - Reads the input file, sends text to the translator, and uploads the result to the `responses` container.
 
-4. **Store Output**:  
-   The translated content along with metadata (logs) is saved in the **responses** container in Blob Storage.
+- **Azure AI Translator**
+  - Cloud-based API used to translate the file contents.
+  - Supports multiple languages and integrates with Azure securely.
 
-5. **IAM Security**:  
-   IAM permissions are provisioned via Terraform to allow secure communication between the Function App and Blob Storage using Managed Identity.
+- **Terraform**
+  - Manages infrastructure provisioning as code.
+  - Deploys storage accounts, containers, Function Apps, IAM roles, and permissions in a repeatable and version-controlled way.
+
+- **IAM (Identity and Access Management)**
+  - Uses **Managed Identity** for secure, keyless access.
+  - Azure Function App gets **Blob Storage Contributor** role to interact with containers.
 
 ---
 
-## 🛠️ Technologies Used
+### 🔁 Workflow Explanation
 
-- **Terraform** – Infrastructure as Code
-- **Azure Blob Storage** – For storing input/output files
-- **Azure Function App** – Serverless execution of translation logic
-- **Azure AI Translator** – Cloud translation API
-- **Python** – Translation script using Azure SDK
-- **Azure CLI** – Resource deployment
+1. **User Uploads File**
+   - A `.txt` file is uploaded to the `requests` container using Azure tools or HTTP.
+
+2. **Azure Function is Triggered**
+   - Triggered via Blob trigger when a new file is added.
+   - Python script:
+     - Reads the uploaded file
+     - Extracts text and language info
+     - Sends content to Azure Translator API
+
+3. **Translation Output is Saved**
+   - Receives translated content
+   - Creates a new file with translated text
+   - Uploads both the translation and a log file to the `responses` container
+
+4. **User Retrieves Translated File**
+   - Users can download the translated file from the `responses` container.
 
 ---
 
